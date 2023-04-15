@@ -1,0 +1,104 @@
+version: '3'
+services:
+  backend:
+    container_name: backend
+    restart: always
+    build:
+      context: .
+      dockerfile: container/backend/Dockerfile
+    volumes:
+      - ./backend:/app
+    environment:
+      TZ: Asia/Tokyo
+      RAILS_ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.3-alpine
+    container_name: postgres
+    environment:
+      - TZ=Asia/Tokyo
+      - PGTZ=Asia/Tokyo
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./container/db/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+
+
+
+# version: "3"
+
+# services:
+#   web:
+#     image: nginx:1.21.6
+#     container_name: web
+#     environment:
+#       TZ: Asia/Tokyo
+#     volumes:
+#       - ./container/nginx/default.conf:/etc/nginx/conf.d/default.conf
+#       - ./backend/public:/backend/public
+#       - ./backend/tmp:/backend/tmp
+#     ports:
+#       - "80:80"
+#     depends_on:
+#       - frontend
+#       - backend
+
+#   frontend:
+#     container_name: frontend
+#     build:
+#       context: .
+#       dockerfile: container/frontend/Dockerfile
+#     volumes:
+#       - ./frontend:/usr/src/app
+#     command: yarn dev
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     container_name: backend
+#     build:
+#       context: .
+#       dockerfile: container/backend/Dockerfile
+#     volumes:
+#       - ./backend:/app
+#     environment:
+#       TZ: Asia/Tokyo
+#       RAILS_ENV: development
+#     ports:
+#       - "3001:3000"
+#     depends_on:
+#       - db
+
+#   db:
+#     image: postgres:14.3-alpine
+#     container_name: postgres
+#     environment:
+#       - TZ=Asia/Tokyo
+#       - PGTZ=Asia/Tokyo
+#       - POSTGRES_PASSWORD=password
+#     volumes:
+#       - ./container/db/data:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+
+#   pgadmin4:
+#     image: dpage/pgadmin4:6.15
+#     container_name: pgadmin4
+#     ports:
+#       - 8087:80
+#     volumes:
+#       - ./container/pgadmin4:/var/lib/pgadmin
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: root@root.com
+#       PGADMIN_DEFAULT_PASSWORD: password
+#     hostname: pgadmin4
+#     depends_on:
+#       - db
