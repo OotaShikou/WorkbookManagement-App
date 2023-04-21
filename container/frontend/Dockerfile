@@ -1,5 +1,5 @@
-From node:18-alpine3.15
+FROM node:18-alpine3.15
 
-ENV APP_PATH /use/src/app
+ENV APP_PATH /usr/src/app
 
-WORKDIR $ APP_PATH
+WORKDIR $APP_PATH
