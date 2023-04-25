@@ -13,7 +13,7 @@ services:
       - "80:80"
     depends_on:
       - backend
-#       - frontend
+      - frontend
 
   backend:
     container_name: backend
@@ -56,16 +56,16 @@ services:
     depends_on:
       - backend
 
-#   pgadmin4:
-#     image: dpage/pgadmin4:6.15
-#     container_name: pgadmin4
-#     ports:
-#       - 8087:80
-#     volumes:
-#       - ./container/pgadmin4:/var/lib/pgadmin
-#     environment:
-#       PGADMIN_DEFAULT_EMAIL: root@root.com
-#       PGADMIN_DEFAULT_PASSWORD: password
-#     hostname: pgadmin4
-#     depends_on:
-#       - db
+  pgadmin4:
+    image: dpage/pgadmin4:6.15
+    container_name: pgadmin4
+    ports:
+      - 8087:80
+    volumes:
+      - ./container/pgadmin4:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@root.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    hostname: pgadmin4
+    depends_on:
+      - db
