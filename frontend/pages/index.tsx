@@ -1,46 +1,52 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
-
-import { styled } from "@mui/system";
-import { css } from "@mui/styled-engine";
 import { Button } from "@mui/material";
-
-const inter = Inter({ subsets: ["latin"] });
-
-const RedColor = css({
-  color: "red",
-});
-
-const Welcome = styled("span")({
-  color: "lightblue",
-  backgroundColor: "blue",
-  padding: 8,
-  borderRadius: 4,
-});
+import {
+  useFetchQuestion,
+  useCreateQuestion,
+  useDeleteQuestion,
+  useUpdateQuestion,
+} from "../hooks/useQuestion";
 
 export default function Home() {
+  const { data, error, mutate } = useFetchQuestion();
+
+  const Create = async () => {
+    await useCreateQuestion({ content: "NewData", answer: "NewData" });
+  };
+  const Update = async (id: number) => {
+    await useUpdateQuestion({
+      content: "UpdateData",
+      answer: "UpdateData",
+      id,
+    });
+  };
+  const Delete = async (id: number) => {
+    await useDeleteQuestion(id);
+  };
+  console.log(data);
+
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between p-24`}
     >
-      <h1>
-        <Welcome>Welcome to</Welcome> <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+      <button onClick={() => mutate()}>データを更新</button>
+      {data ? (
+        data.map((data: any) => (
+          <div key={data.id}>
+            <p>
+              {data.content}
+              <button onClick={() => Update(data.id)}>データ更新する</button>
+              <button onClick={() => Delete(data.id)}>データ削除する</button>
+            </p>
+            <br />
+          </div>
+        ))
+      ) : (
+        <p>loading</p>
+      )}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+      <br />
+      <button onClick={Create}>データ作成する</button>
     </main>
   );
 }
