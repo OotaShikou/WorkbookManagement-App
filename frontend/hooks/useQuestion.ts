@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import apiClient from "../src/apiClient";
+import {
+  FetchQuestion,
+  FetchShowQuestion,
+  CreateQuestion,
+  UpdateQuestion,
+} from "../types/question";
 
 //------------- ********************* -----------------/
 //------------- 全件データを取得する -----------------/
-export interface FetchQuestion {
-  data: any | undefined;
-  error: Error | undefined;
-  mutate: () => void;
-}
 export const useFetchQuestion = (): FetchQuestion => {
   const allDatafetcher = (url: string) =>
     apiClient(url).then((res) => res.data);
@@ -22,11 +23,6 @@ export const useFetchQuestion = (): FetchQuestion => {
 
 //------------- ********************* -----------------/
 //------------- 特定データを取得する -----------------/
-export interface FetchShowQuestion {
-  data: any | undefined;
-  error: Error | undefined;
-  mutate: () => void;
-}
 export const useFetchShowQuestion = (questionId: number): FetchShowQuestion => {
   const showDatafetcher = (url: string) =>
     apiClient(url).then((res) => res.data);
@@ -40,10 +36,6 @@ export const useFetchShowQuestion = (questionId: number): FetchShowQuestion => {
 
 //------------- ********************* -----------------/
 //------------- データを作成する -----------------/
-export interface CreateQuestion {
-  content: string;
-  answer: string;
-}
 export const useCreateQuestion = (params: CreateQuestion) => {
   apiClient
     .post("questions", {
@@ -62,11 +54,6 @@ export const useCreateQuestion = (params: CreateQuestion) => {
 
 //------------- ********************* -----------------/
 //------------- データを更新する -----------------/
-export interface UpdateQuestion {
-  content: string;
-  answer: string;
-  id: number;
-}
 export const useUpdateQuestion = (params: UpdateQuestion) => {
   apiClient
     .put(`questions/${params.id}`, {
