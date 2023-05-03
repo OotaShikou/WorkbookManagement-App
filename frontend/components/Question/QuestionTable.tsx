@@ -67,41 +67,43 @@ const QuestionTable = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.map((row: any) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                    <TableCell align={"center"} style={{ width: 120 }}>
-                      <TableDialog
-                        color={"secondary"}
-                        tooltip_title={"問題を編集する"}
-                        content={
-                          <EditForm id={row.id} button_text={"編集する"} />
-                        }
-                        dialog_title={"問題を編集しますか?"}
-                        icon={<EditIcon />}
-                      />
-                      <TableDialog
-                        color={"warning"}
-                        tooltip_title={"問題を削除する"}
-                        action={() => useDeleteQuestion(row.id)}
-                        content={`本当に問題を削除しますか?\n よろしければはい「はい」を押してください。`}
-                        dialog_title={"問題を削除しますか?"}
-                        icon={<DeleteIcon />}
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row: any) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                      <TableCell align={"center"} style={{ width: 120 }}>
+                        <TableDialog
+                          color={"secondary"}
+                          tooltip_title={"問題を編集する"}
+                          content={
+                            <EditForm id={row.id} button_text={"編集する"} />
+                          }
+                          dialog_title={"問題を編集しますか?"}
+                          icon={<EditIcon />}
+                        />
+                        <TableDialog
+                          color={"warning"}
+                          tooltip_title={"問題を削除する"}
+                          action={() => useDeleteQuestion(row.id)}
+                          content={`本当に問題を削除しますか?\n よろしければ「はい」を押してください。`}
+                          dialog_title={"問題を削除しますか?"}
+                          icon={<DeleteIcon color="error" />}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -116,7 +118,7 @@ const QuestionTable = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={data && data.length}
+          count={data ? data.length : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
