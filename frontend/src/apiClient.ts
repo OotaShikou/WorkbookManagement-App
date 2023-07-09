@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 const apiClient = axios.create({
   baseURL: process.browser
@@ -7,9 +7,9 @@ const apiClient = axios.create({
     : "http://web/manage/api/v1/",
   headers: {
     "Content-Type": "application/json",
-    // 'uid': Cookies.get("uid"),
-    // 'client': Cookies.get("client"),
-    // "access-token": Cookies.get("access-token"),
+    'uid': parseCookies().uid,
+    'client': parseCookies().client,
+    "access-token": parseCookies()["access-token"],
     "X-Requested-With": "XMLHttpRequest",
   },
   withCredentials: true,

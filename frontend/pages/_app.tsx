@@ -7,7 +7,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-
+import { requireAuthentication } from "../src/auth";
+import { useRouter } from "next/router";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -16,6 +17,10 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp(props: MyAppProps) {
+  const router = useRouter();
+  const currentPath = router.pathname;
+  React.useEffect(requireAuthentication(currentPath))
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
