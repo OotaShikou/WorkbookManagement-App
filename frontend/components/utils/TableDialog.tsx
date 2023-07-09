@@ -8,6 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  Box,
 } from "@mui/material";
 import { DialogProps } from "../../types/utils";
 
@@ -23,9 +24,9 @@ const TableDialog = (props: DialogProps) => {
   return (
     <>
       <Tooltip title={props.tooltip_title}>
-        <IconButton size="small" color={props.color} onClick={handleClickOpen}>
-          {props.icon}
-        </IconButton>
+        <Box onClick={handleClickOpen} sx={{ display: "inline" }}>
+          {props.button}
+        </Box>
       </Tooltip>
 
       <Dialog

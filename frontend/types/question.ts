@@ -32,7 +32,7 @@ export interface Column {
   format?: (value: number) => string;
 }
 
-export interface EditFormProps {
-  id: number;
+export interface FormProps {
+  id?: number;
   button_text: string;
 }

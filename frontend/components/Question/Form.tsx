@@ -7,13 +7,13 @@ import {
 } from "../../hooks/useQuestion";
 import { UpdateQuestion } from "../../types/question";
 import { Box, TextField, Button } from "@mui/material";
-import { EditFormProps } from "../../types/question";
+import { FormProps } from "../../types/question";
 
-const EditForm = (props: EditFormProps) => {
+const Form = (props: FormProps) => {
   const [params, setParams] = React.useState<UpdateQuestion>({
     content: "",
     answer: "",
-    id: props.id,
+    id: props.id ? props.id : 0,
   });
 
   return (
@@ -41,7 +41,9 @@ const EditForm = (props: EditFormProps) => {
         onChange={(e) => setParams({ ...params, answer: e.target.value })}
       />
       <Button
-        onClick={() => useUpdateQuestion(params)}
+        onClick={() =>
+          props.id ? useUpdateQuestion(params) : useCreateQuestion(params)
+        }
         fullWidth
         variant="contained"
         sx={{ mt: 1, mb: 2 }}
@@ -52,4 +54,4 @@ const EditForm = (props: EditFormProps) => {
   );
 };
 
-export default EditForm;
+export default Form;

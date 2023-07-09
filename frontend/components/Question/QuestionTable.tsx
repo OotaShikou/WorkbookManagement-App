@@ -10,6 +10,7 @@ import {
   TableRow,
   Box,
   Button,
+  IconButton,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
@@ -18,11 +19,10 @@ import {
   useFetchQuestion,
   useCreateQuestion,
   useDeleteQuestion,
-  useUpdateQuestion,
 } from "../../hooks/useQuestion";
 import { Column } from "../../types/question";
 import TableDialog from "../utils/TableDialog";
-import EditForm from "./EditForm";
+import Form from "./Form";
 
 const columns: readonly Column[] = [
   { id: "content", label: "問題", minWidth: 170 },
@@ -84,21 +84,27 @@ const QuestionTable = () => {
                       })}
                       <TableCell align={"center"} style={{ width: 120 }}>
                         <TableDialog
-                          color={"secondary"}
                           tooltip_title={"問題を編集する"}
                           content={
-                            <EditForm id={row.id} button_text={"編集する"} />
+                            <Form id={row.id} button_text={"編集する"} />
                           }
                           dialog_title={"問題を編集しますか?"}
-                          icon={<EditIcon />}
+                          button={
+                            <IconButton size="small" color={"secondary"}>
+                              <EditIcon />
+                            </IconButton>
+                          }
                         />
                         <TableDialog
-                          color={"warning"}
                           tooltip_title={"問題を削除する"}
                           action={() => useDeleteQuestion(row.id)}
                           content={`本当に問題を削除しますか?\n よろしければ「はい」を押してください。`}
                           dialog_title={"問題を削除しますか?"}
-                          icon={<DeleteIcon color="error" />}
+                          button={
+                            <IconButton size="small" color={"warning"}>
+                              <DeleteIcon />
+                            </IconButton>
+                          }
                         />
                       </TableCell>
                     </TableRow>
@@ -125,18 +131,22 @@ const QuestionTable = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{ float: "left" }}
         />
-        <Button
-          size="small"
-          color="success"
-          variant="contained"
-          endIcon={<AddCircleOutlineIcon />}
-          sx={{ mr: 3 }}
-          onClick={() =>
-            useCreateQuestion({ content: "NewData", answer: "NewData" })
+        <TableDialog
+          tooltip_title={"問題を作成する"}
+          content={<Form button_text={"作成する"} />}
+          dialog_title={"問題を作成しますか?"}
+          button={
+            <Button
+              size="small"
+              color="success"
+              variant="contained"
+              endIcon={<AddCircleOutlineIcon />}
+              sx={{ mr: 3 }}
+            >
+              問題を作成する
+            </Button>
           }
-        >
-          問題を作成する
-        </Button>
+        />{" "}
       </Box>
     </Paper>
   );

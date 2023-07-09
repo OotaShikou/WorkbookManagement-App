@@ -3,7 +3,14 @@
 docker-compose up -d --build
 ```
 
+#### Auth api コマンド
+```
+sign_up
+curl -X POST http://localhost/manage/api/v1/auth -d "[name]=test&[email]=test@example.com&[password]=password&[password_confirmation]=password"
 
+sign_in
+curl -X POST -v http://localhost/manage/api/v1/auth/sign_in -d "[email]=test@example.com&[password]=password"
+```
 #### Questions api コマンド
 ```
 index
