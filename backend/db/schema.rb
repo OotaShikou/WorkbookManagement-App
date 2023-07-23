@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_09_091841) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_205313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,35 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_09_091841) do
     t.string "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workbook_id"
+    t.bigint "type_id"
+    t.index ["type_id"], name: "index_questions_on_type_id"
+    t.index ["workbook_id"], name: "index_questions_on_workbook_id"
+  end
+
+  create_table "student_teachers", force: :cascade do |t|
+    t.bigint "teacher_id"
+    t.bigint "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_teachers_on_student_id"
+    t.index ["teacher_id"], name: "index_student_teachers_on_teacher_id"
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "question_format_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_workbooks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "workbook_id"
+    t.boolean "is_teacher", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_workbooks_on_user_id"
+    t.index ["workbook_id"], name: "index_user_workbooks_on_workbook_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,4 +75,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_09_091841) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  create_table "workbooks", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "questions", "types"
+  add_foreign_key "questions", "workbooks"
+  add_foreign_key "student_teachers", "users", column: "student_id"
+  add_foreign_key "student_teachers", "users", column: "teacher_id"
+  add_foreign_key "user_workbooks", "users"
+  add_foreign_key "user_workbooks", "workbooks"
 end

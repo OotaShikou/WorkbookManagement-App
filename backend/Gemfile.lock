@@ -156,6 +156,10 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     reline (0.3.3)
       io-console (~> 0.5)
     responders (3.1.0)
@@ -184,6 +188,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.0)
+  ransack
   tzinfo-data
 
 RUBY VERSION

@@ -2,8 +2,9 @@ class Api::V1::QuestionsController < ApplicationController
   before_action :set_question, only: %i[show update destroy]
 
   def index
-    questions = Question.all.order(:id)
-    render json: questions
+    q = Question.ransack(workbook_id_eq: params[:workbook_id])
+    questions = q.result.includes(:type, :workbook).order(:id)
+    render json: questions, include: [:type, :workbook]
   end
 
   def show
@@ -42,10 +43,7 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def set_params
-    params.require(:question).permit(
-      :content,
-      :answer,
-    )
+    params.permit(:content, :answer, :workbook_id, :type_id)
   end
 
 end
