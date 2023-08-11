@@ -13,6 +13,8 @@ const Form = (props: FormProps) => {
   const [params, setParams] = React.useState<UpdateQuestion>({
     content: "",
     answer: "",
+    workbook_id: 1,
+    type_id: 1,
     id: props.id ? props.id : 0,
   });
 
@@ -39,6 +41,19 @@ const Form = (props: FormProps) => {
         id="answer"
         defaultValue={params.answer}
         onChange={(e) => setParams({ ...params, answer: e.target.value })}
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        name="type_id"
+        label="問題形式"
+        type="number"
+        id="type_id"
+        defaultValue={params.type_id}
+        onChange={(e) =>
+          setParams({ ...params, type_id: parseInt(e.target.value) })
+        }
       />
       <Button
         onClick={() =>

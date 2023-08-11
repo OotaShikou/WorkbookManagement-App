@@ -7,8 +7,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-import { requireAuthentication } from "../src/auth";
+import { requireAuthentication, isAuthenticated } from "../src/auth";
 import { useRouter } from "next/router";
+import AppDrawer from "@/components/Container/AppDrawer";
+import { RecoilRoot } from "recoil";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -19,16 +22,20 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const router = useRouter();
   const currentPath = router.pathname;
-  React.useEffect(requireAuthentication(currentPath))
-
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  React.useEffect(requireAuthentication(currentPath), []);
 
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <AppDrawer>
+            <Component {...pageProps} />
+          </AppDrawer>
+        </RecoilRoot>
       </ThemeProvider>
     </CacheProvider>
   );

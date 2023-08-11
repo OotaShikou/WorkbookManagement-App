@@ -16,12 +16,16 @@ export interface FetchShowQuestion {
 export interface CreateQuestion {
   content: string;
   answer: string;
+  workbook_id: number;
+  type_id: number;
 }
 
 export interface UpdateQuestion {
   content: string;
   answer: string;
   id: number;
+  workbook_id: number;
+  type_id: number;
 }
 
 export interface Column {
