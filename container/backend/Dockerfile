@@ -25,4 +25,4 @@ COPY ./container/backend/entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["rails", "server", "-e"]
+CMD ["rails", "server", "-e", "production"]

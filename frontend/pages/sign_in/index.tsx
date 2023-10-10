@@ -1,24 +1,31 @@
-import * as React from 'react';
-import { Link, Typography, Button, CssBaseline, TextField, Grid, Box, Container, Alert } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from "../../components/utils/Copyright"
-import { useState } from 'react';
-import axios from 'axios';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
-import router from 'next/router';
+import * as React from "react";
+import {
+  Link,
+  Typography,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Container,
+  Alert,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Copyright from "../../components/utils/Copyright";
+import { useState } from "react";
+import axios from "axios";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
+import router from "next/router";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
+  console.log(
+    parseCookies().client,
+    parseCookies().uid,
+    parseCookies()["access-token"]
+  );
 
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -38,8 +45,8 @@ export default function SignIn() {
       setErrorMessage("");
       try {
         const response = await axiosInstance.post("auth/sign_in", {
-          email: data.get('email'),
-          password: data.get('password'),
+          email: data.get("email"),
+          password: data.get("password"),
         });
         // Cookieにトークンをセットしています
         setCookie(null, "uid", response.headers["uid"], {
@@ -51,6 +58,8 @@ export default function SignIn() {
         setCookie(null, "access-token", response.headers["access-token"], {
           path: "/",
         });
+        console.log(response);
+
         router.push("/dashboard");
       } catch (error) {
         // Cookieからトークンを削除しています
@@ -70,12 +79,17 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

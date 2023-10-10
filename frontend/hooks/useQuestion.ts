@@ -9,10 +9,10 @@ import {
 
 //------------- ********************* -----------------/
 //------------- 全件データを取得する -----------------/
-export const useFetchQuestion = (): FetchQuestion => {
+export const useFetchQuestion = (workbook_id: number): FetchQuestion => {
   const allDatafetcher = (url: string) =>
     apiClient(url).then((res) => res.data);
-  const allDatafetcherUrl = "questions?workbook_id=1";
+  const allDatafetcherUrl = `questions?workbook_id=${workbook_id}`;
 
   const { data, error, mutate } = useSWR(allDatafetcherUrl, allDatafetcher);
   return { data, error, mutate };
@@ -20,18 +20,18 @@ export const useFetchQuestion = (): FetchQuestion => {
 //------------- 全件データを取得する fin -----------------/
 //------------- ********************* -----------------/
 
-//------------- ********************* -----------------/
-//------------- 特定データを取得する -----------------/
-export const useFetchShowQuestion = (questionId: number): FetchShowQuestion => {
-  const showDatafetcher = (url: string) =>
-    apiClient(url).then((res) => res.data);
-  const showDatafetcherUrl = `questions/${questionId}`;
+// //------------- ********************* -----------------/
+// //------------- 特定データを取得する -----------------/
+// export const useFetchShowQuestion = (questionId: number): FetchShowQuestion => {
+//   const showDatafetcher = (url: string) =>
+//     apiClient(url).then((res) => res.data);
+//   const showDatafetcherUrl = `questions/${questionId}`;
 
-  const { data, error, mutate } = useSWR(showDatafetcherUrl, showDatafetcher);
-  return { data, error, mutate };
-};
-//------------- 特定データを取得する fin -----------------/
-//------------- ********************* -----------------/
+//   const { data, error, mutate } = useSWR(showDatafetcherUrl, showDatafetcher);
+//   return { data, error, mutate };
+// };
+// //------------- 特定データを取得する fin -----------------/
+// //------------- ********************* -----------------/
 
 //------------- ********************* -----------------/
 //------------- データを作成する -----------------/
