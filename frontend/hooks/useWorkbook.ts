@@ -1,5 +1,5 @@
 import useSWR, { mutate } from "swr";
-import apiClient from "../src/apiClient";
+import apiClient from "../lib/apiClient";
 import { FetchWorkbook } from "../types/workbook";
 
 //------------- ********************* -----------------/

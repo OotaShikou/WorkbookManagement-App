@@ -21,9 +21,6 @@ curl -X POST -v http://localhost/manage/api/v1/auth/sign_in -d "[email]=test@exa
 index
 curl localhost/manage/api/v1/questions
 
-show
-curl localhost/manage/api/v1/questions/1
-
 create
 curl localhost/manage/api/v1/questions -X POST -d '{"content": "野球は英語で?", "answer": "baseball" }' -H "content-type:application/json"
 
@@ -40,9 +37,6 @@ curl localhost/manage/api/v1/questions/1 -X DELETE
 ```
 index
 curl localhost/manage/api/v1/workbooks
-
-show
-curl localhost/manage/api/v1/workbooks/1
 
 create
 curl localhost/manage/api/v1/workbooks -X POST -d '{"title": "綺麗にわかる英単語"}' -H "content-type:application/json"

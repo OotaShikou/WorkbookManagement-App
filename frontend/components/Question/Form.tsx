@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  useFetchQuestion,
-  useCreateQuestion,
-  useDeleteQuestion,
-  useUpdateQuestion,
-} from "../../hooks/useQuestion";
+import { useCreateQuestion, useUpdateQuestion } from "../../hooks/useQuestion";
 import { UpdateQuestion } from "../../types/question";
 import { Box, TextField, Button } from "@mui/material";
 import { FormProps } from "../../types/question";
@@ -13,8 +8,8 @@ const Form = (props: FormProps) => {
   const [params, setParams] = React.useState<UpdateQuestion>({
     content: "",
     answer: "",
-    workbook_id: 1,
-    type_id: 1,
+    workbook_id: props.workbook_id,
+    type_id: props.type_id,
     id: props.id ? props.id : 0,
   });
 

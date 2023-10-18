@@ -38,5 +38,7 @@ export interface Column {
 
 export interface FormProps {
   id?: number;
+  workbook_id: number;
+  type_id: number;
   button_text: string;
 }

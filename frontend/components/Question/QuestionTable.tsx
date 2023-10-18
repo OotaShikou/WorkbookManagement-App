@@ -109,7 +109,12 @@ const QuestionTable = () => {
                           <TableDialog
                             tooltip_title={"問題を編集する"}
                             content={
-                              <Form id={row.id} button_text={"編集する"} />
+                              <Form
+                                id={row.id}
+                                type_id={1}
+                                workbook_id={9}
+                                button_text={"編集する"}
+                              />
                             }
                             dialog_title={"問題を編集しますか?"}
                             button={
@@ -161,7 +166,9 @@ const QuestionTable = () => {
           />
           <TableDialog
             tooltip_title={"問題を作成する"}
-            content={<Form button_text={"作成する"} />}
+            content={
+              <Form type_id={1} workbook_id={9} button_text={"作成する"} />
+            }
             dialog_title={"問題を作成しますか?"}
             button={
               <Button

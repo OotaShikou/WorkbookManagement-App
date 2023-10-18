@@ -1,10 +1,20 @@
-import { useState } from 'react';
-import { Link, Typography, Button, CssBaseline, TextField, Grid, Box, Container, Alert } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from "../../components/utils/Copyright"
-import axios from 'axios';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
-import router from 'next/router';
+import { useState } from "react";
+import {
+  Link,
+  Typography,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Container,
+  Alert,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Copyright from "../../components/utils/Copyright";
+import axios from "axios";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
+import router from "next/router";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -28,10 +38,11 @@ export default function SignUp() {
       setErrorMessage("");
       try {
         const response = await axiosInstance.post("auth", {
-          email: data.get('email'),
-          password: data.get('password'),
-          password_confirmation: data.get('password_confirmation'),
-          name: data.get('name'),
+          email: data.get("email"),
+          password: data.get("password"),
+          password_confirmation: data.get("password_confirmation"),
+          name: data.get("name"),
+          confirm_success_url: "http://localhost/sign_in",
         });
         // Cookieにトークンをセットしています
         setCookie(null, "uid", response.headers["uid"], {
@@ -62,12 +73,17 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
