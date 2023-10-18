@@ -1,5 +1,5 @@
 import useSWR, { mutate } from "swr";
-import apiClient from "../src/apiClient";
+import apiClient from "../lib/apiClient";
 import {
   FetchQuestion,
   FetchShowQuestion,
@@ -41,9 +41,11 @@ export const useCreateQuestion = (params: CreateQuestion) => {
       content: params.content,
       answer: params.answer,
       workbook_id: params.workbook_id,
-      type_id: params.workbook_id,
+      type_id: params.type_id,
     })
-    .then(() => {
+    .then((data) => {
+      console.log(data);
+
       mutate(
         (key) =>
           typeof key === "string" && key.startsWith("questions?workbook_id")
@@ -64,7 +66,7 @@ export const useUpdateQuestion = (params: UpdateQuestion) => {
       content: params.content,
       answer: params.answer,
       workbook_id: params.workbook_id,
-      type_id: params.workbook_id,
+      type_id: params.type_id,
     })
     .then(() => {
       mutate(

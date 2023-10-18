@@ -1,7 +1,7 @@
 class Api::V1::WorkbooksController < ApplicationController
     before_action :set_workbook, only: [:show, :update, :destroy]
     before_action :authenticate_api_v1_user!
-    before_action :authorization_workbook, only: %i[create update destroy]
+    before_action :authorization_workbook, only: %i[update destroy]
 
     def index
       authorization_result = Workbook.authorization(current_api_v1_user.id, params[:workbook_id].to_i)
@@ -13,19 +13,21 @@ class Api::V1::WorkbooksController < ApplicationController
     end
   
     def create
-      workbook = Workbook.new(workbook_params)
+      workbook = Workbook.new(set_params)
       user = User.find(current_api_v1_user.id)
-      user.user_workbooks << workbook
-      
-      if workbook.save
+    
+      user_workbook = UserWorkbook.new(workbook: workbook)
+      user.user_workbooks << user_workbook
+    
+      if user_workbook.save
         render json: workbook, status: :created
       else
-        render json: workbook.errors, status: :unprocessable_entity
+        render json: user_workbook.errors, status: :unprocessable_entity
       end
     end
   
     def update
-      if @workbook.update(workbook_params)
+      if @workbook.update(set_params)
         render json: @workbook
       else
         render json: @workbook.errors, status: :unprocessable_entity
@@ -43,8 +45,8 @@ class Api::V1::WorkbooksController < ApplicationController
       @workbook = Workbook.find(params[:id])
     end
   
-    def workbook_params
-      params.require(:workbook).permit(:title)
+    def set_params
+      params.permit(:title)
     end
 
     def authorization_workbook
