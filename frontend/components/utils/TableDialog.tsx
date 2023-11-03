@@ -36,7 +36,7 @@ const TableDialog = (props: DialogProps) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{props.dialog_title}</DialogTitle>
-        <DialogContent>{props.content}</DialogContent>
+        <DialogContent sx={{ width: "500px" }}>{props.content}</DialogContent>
         {props.action && (
           <DialogActions>
             <Button onClick={handleClose}>いいえ</Button>

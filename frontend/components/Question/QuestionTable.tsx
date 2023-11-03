@@ -18,7 +18,6 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useFetchQuestion, useDeleteQuestion } from "../../hooks/useQuestion";
-import { useFetchQuestionTypes } from "@/hooks/useTypes";
 import { Column } from "../../types/question";
 import TableDialog from "../utils/TableDialog";
 import Form from "./Form";
@@ -37,7 +36,6 @@ const QuestionTable = () => {
 
   const questions = useFetchQuestion(workbookId);
   const workbooks = useFetchWorkbook();
-  const types = useFetchQuestionTypes();
 
   return (
     <>
